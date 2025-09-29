@@ -11,16 +11,12 @@ if (count($_POST) > 0) {
 
     $erro = false;
     $nome = $_POST['nome'];
-    $cpf = $_POST['cpf'];
     $email = $_POST['email'];
     $celular = $_POST['celular'];
     $nascimento = $_POST['nascimento'];
 
     if (empty($nome)) {
         $erro = "Preencha o campo nome";
-    }
-    if (empty($cpf)) {
-        $erro = "Preencha o cpf";
     }
     if (empty($celular)) {
         $erro = "Preencha o campo celular";
@@ -40,27 +36,25 @@ if (count($_POST) > 0) {
         if (strlen($celular) != 11)
             $erro = "O celular deve ser preenchido no padrão: (44) 99444-4444";
     }
-    if ($erro) {
-    } else {
-        $sql_code = "INSERT INTO clientes (nome, cpf, email, celular, nascimento, data_de_cadastro)
-    VALUES ('$nome', '$cpf', '$email', '$celular', '$nascimento', NOW())";
+    if (!$erro) {
+        $sql_code = "INSERT INTO clientes (nome, email, celular, data_de_cadastro)
+    VALUES ('$nome', '$email', '$celular', NOW())";
         $querySuccess = $mysqli->query($sql_code) or die($mysqli->error);
         if ($querySuccess) {
-            
-            //echo "<p><b>Cliente cadastrado com sucesso!</br></p>";
-            //unset($_POST);
-            $sql_code = "INSERT INTO servico (nome)
-            VALUES ('psicoterapia')";
-                $querySuccess = $mysqli->query($sql_code) or die($mysqli->error);
-                if ($querySuccess) {
-                    $sql_code = "INSERT INTO agendamento (id_cliente, id_servico, data_e_hora_agendamento, observacoes)
-                    VALUES (8, 1, '2025-09-20 15:30:00', 'semobservac')";
-                    $querySuccess = $mysqli->query($sql_code) or die($mysqli->error);
-                    if ($querySuccess) {
-                        echo "<p><b>Cliente cadastrado com sucesso!</br></p>";
-                        unset($_POST);
-                    }
-                }
+
+            echo "<p><b>Cliente cadastrado com sucesso!</br></p>";
+            unset($_POST);
+            /*    
+                            if ($querySuccess) {
+                                $sql_code = "INSERT INTO agendamento (id_cliente, id_servico, data_e_hora_agendamento, observacoes)
+                                VALUES (8, 1, '2025-09-20 15:30:00', 'semobservac')";
+                                $querySuccess = $mysqli->query($sql_code) or die($mysqli->error);
+                                if ($querySuccess) {
+                                    echo "<p><b>Cliente cadastrado com sucesso!</br></p>";
+                                    unset($_POST);
+                                }
+                            }
+                                */
         }
     }
 }
@@ -82,11 +76,6 @@ if (count($_POST) > 0) {
             <label>Nome</label>
             <input value="<?php if (isset($_POST['nome']))
                 echo $_POST['nome']; ?>" name="nome" type="text">
-        </p>
-        <p>
-            <label>CPF</label>
-            <input value="<?php if (isset($_POST['cpf']))
-                echo $_POST['cpf']; ?>" name="cpf" type="text">
         </p>
         <p>
             <label>E-mail</label>

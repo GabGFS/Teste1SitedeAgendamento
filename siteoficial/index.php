@@ -53,7 +53,7 @@
                 echo '<p class="error">Preencha o campo "e-mail" com um e-mail válido.</p>';
                 die();
             }
-            if (!empty($_POST['website']) && !filter_var($_POST['website'], FILTER_VALIDATE_EMAIL)) {
+            if (empty($_POST['website'])) {
                 echo '<p class="error">Preencha o corretamente o campo website.</p>';
                 die();
             }
